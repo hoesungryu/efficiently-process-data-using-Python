@@ -302,3 +302,29 @@ def read_Dask(files):
     time_elapsed = end_time - start_time
 
     return time_elapsed
+    
+def read_pickle(files):
+    start_time = time()
+
+    for file in files:
+        df = pd.read_pickle(file)
+    end_time = time()
+
+    time_elapsed = end_time - start_time
+
+    return time_elapsed
+
+
+def check_reading_speed_appendix(csv_file_path, pickle_file_path, num_test=10):
+
+    csv_files = [csv_file_path for i in range(num_test)]
+    pickle_files = [pickle_file_path for i in range(num_test)]
+    print('Checking reading speed ...')
+
+    dask_time_elapsed = read_Dask(csv_files)
+    print('\tDask done ... ')
+    pickle_time_elapsed = read_pickle(pickle_files)
+    print('\tPickle done ... ')
+
+    print('Experiments Done .. ')
+    return dask_time_elapsed, pickle_time_elapsed
